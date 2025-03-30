@@ -3,6 +3,7 @@ from PIL import Image
 import imagehash
 import requests
 from io import BytesIO
+import os
 
 app = Flask(__name__)
 
@@ -22,3 +23,8 @@ def phash():
         return jsonify({'hash': hash_str})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+# Let Render assign the correct port
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
